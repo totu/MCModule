@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -12,9 +12,9 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="../css/normalize.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=Cuprum|Text+Me+One' rel='stylesheet' type='text/css'>
 
     </head>
@@ -36,24 +36,50 @@
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
-				
-					<h1 style='text-align:center;margin-top:100px;font-size:60px;'>Here be dragons!</h1>
-				
+					<div id="padder">
+					<?php
+						require_once '../inc/MCAPI.class.php';
+						require_once '../inc/config.inc.php'; //contains apikey
+						
+						$cid = $_COOKIE['cid'];
+						$api = new MCAPI($apikey);
+
+						$retval = $api->campaignContent($cid);
+						$retval = $api->campaigns();
+
+					if ($api->errorCode){
+						echo "Unable to Pull list of Campaign!";
+						echo "\n\tCode=".$api->errorCode;
+						echo "\n\tMsg=".$api->errorMessage."\n";
+					} else {
+						echo "<table><tr>
+						<td>Name</td>
+						<td>ID</td>
+						<td>List in use</td>
+						<td>Status</td>
+						<td>Type</td>
+						<td>Last time send</td>
+						<td>Optiot</td>
+						</tr>";
+						$counter = 0;
+						foreach($retval['data'] as $c){
+							echo "<tr><td><p>" . ucfirst($c['title']) . "</p></td><td>" . $c['id'] . "</td>";
+							echo "<td>" . ucfirst($lname[array_search($c['list_id'], $lid)]) . "</td>";
+							echo "<td>" .
+							ucfirst($c['status']) . $statusd . "</td><td>" . ucfirst($c['type']) . "</td>";
+						}
+						echo "</table>
+					}
+					?>
+					</div>
 				</div>
 			</div>
 		</div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
     </body>
 </html>

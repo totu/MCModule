@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/main.css">
         <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Cuprum|Text+Me+One' rel='stylesheet' type='text/css'>
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -34,9 +36,10 @@
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
-					<form action="modifyAPI.php" method="post">
-					<input name='title' id='title' type="textbox" value='Title'>
+					<div id="padder">
 					<br>
+					<form action="modifyAPI.php" method="post">
+					<label for="title">Title: </label>
 					<?php
 						require_once '../inc/MCAPI.class.php';
 						require_once '../inc/config.inc.php'; //contains apikey
@@ -45,12 +48,14 @@
 						$api = new MCAPI($apikey);
 
 						$retval = $api->campaignContent($cid);
-						echo 'HTML:<textarea name="html" id="html">' . $retval['html'] . '</textarea>';
-						echo 'Text:<textarea name="text" id="text">' . $retval['text'] . '</textarea>';
+						echo "<input style='position:relative;left:10px' type='textbox' name='title' value='" . $_COOKIE['ct'] . "'><br>";
+						echo '<label for="html">HTML: </label><textarea name="html" id="html">' . $retval['html'] . '</textarea>';
+						echo '<label for="text">Text: </label><textarea name="text" id="text">' . $retval['text'] . '</textarea>';
 					?>
 					<br>
 					<input id='modify' type="submit" value='Modify'>
 					</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -60,12 +65,5 @@
         <script src="../js/plugins.js"></script>
         <script src="../js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
     </body>
 </html>
