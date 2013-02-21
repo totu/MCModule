@@ -3,11 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Topi Tuulensu -- Coder -- @TotuMorph
 
 # THANKS
 
-    <name>
+    -
 
 # TECHNOLOGY COLOPHON
 
