@@ -7,8 +7,8 @@
 <body>
 	<form action="createAPI.php" method='post'>
 			<?php
-			require_once 'inc/MCAPI.class.php';
-			require_once 'inc/config.inc.php'; //contains apikey	
+			require_once '../inc/MCAPI.class.php';
+			require_once '../inc/config.inc.php'; //contains apikey	
 			$api = new MCAPI($apikey);
 			$retval = $api->lists();
 			if ($api->errorCode){

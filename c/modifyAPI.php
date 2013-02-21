@@ -6,8 +6,8 @@
 </head>
 <body>
 	<?php
-	require_once 'inc/MCAPI.class.php';
-	require_once 'inc/config.inc.php'; //contains apikey
+	require_once '../inc/MCAPI.class.php';
+	require_once '../inc/config.inc.php'; //contains apikey
 	
 	$cid = $_COOKIE['cid'];
 	$api = new MCAPI($apikey);

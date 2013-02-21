@@ -12,9 +12,9 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="../css/normalize.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -38,8 +38,8 @@
 					<input name='title' id='title' type="textbox" value='Title'>
 					<br>
 					<?php
-						require_once 'inc/MCAPI.class.php';
-						require_once 'inc/config.inc.php'; //contains apikey
+						require_once '../inc/MCAPI.class.php';
+						require_once '../inc/config.inc.php'; //contains apikey
 						
 						$cid = $_COOKIE['cid'];
 						$api = new MCAPI($apikey);
@@ -57,8 +57,8 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
