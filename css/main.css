@@ -254,8 +254,28 @@ input {
 		width:145px;
 	}
 
+	#urltable td:first-child{
+		width:580px;
+	}
+	
+	#unsubtable td{
+		width:300px;
+	}
 
+	#advice {
+		text-align:center;
+		font-size:17px;
+		margin:25px 0 0 0;
+	}
 
+	hr {
+		opacity:0.3;
+		height:1px;
+		border:0;
+		margin:35px auto;
+		border-top:1px solid #cfcfcf;
+		width:95%;
+	}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

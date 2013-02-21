@@ -84,28 +84,40 @@
 								switch ($num) {
 								case 1:
 									$m = 'Jan';
+									break;
 								case 2:
 									$m = 'Feb';
+									break;
 								case 3:
 									$m = 'Mar';
+									break;
 								case 4:
 									$m = 'Apr';
+									break;
 								case 5:
 									$m = 'May';
+									break;
 								case 6:
 									$m = 'Jun';
+									break;
 								case 7:
 									$m = 'Jul';
+									break;
 								case 8:
 									$m = 'Aug';
+									break;
 								case 9:
 									$m = 'Sep';
+									break;
 								case 10:
 									$m = 'Oct';
+									break;
 								case 11:
 									$m = 'Nov';
+									break;
 								case 12:
 									$m = 'Dec';
+									break;
 								}
 								$date = $t[2] . " " . $m . " " . $t[0];
 							} else {
@@ -117,15 +129,15 @@
 							echo "<td>" .
 							ucfirst($c['status']) . $statusd . "</td><td>" . ucfirst($c['type']) . "</td>";
 							echo "<td>" . $date . "</td>";
-							echo "<td style='text-align:right'> 
+							echo "<td> 
 							<input id='id" . $counter . "' type='hidden' name='id' value='" . $c['id'] . "'>
 							<input id='t" . $counter . "' type='hidden' name='t' value='" . $c['title'] . "'>";
 							if ($c['status'] != 'sent') {							
 								echo "<img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>";
+							}else{
+								echo "<img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>";
 							}
-							echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
-							echo "<img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>
-							</td></tr>";
+							echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/></td></tr>";
 						}
 						echo "</table><br>
 						<p style='float:left;margin:0 0 0 10px;padding:0;'>Found " . sizeof($retval['data']) . " Campaign(s).</p>

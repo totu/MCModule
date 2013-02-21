@@ -36,42 +36,72 @@
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
-					<div id="padder">
 					<?php
 						require_once '../inc/MCAPI.class.php';
 						require_once '../inc/config.inc.php'; //contains apikey
-						
 						$cid = $_COOKIE['cid'];
 						$api = new MCAPI($apikey);
+					
+					/* ADVICE ON CAMPAING */
+					$advice = $api->campaignAdvice($cid);
+ 
+					if ($api->errorCode){
+							echo "Unable to run campaignAdvice()!\n";
+					echo "\tCode=".$api->errorCode."\n";
+							echo "\tMsg=".$api->errorMessage."\n";
+					} else {
+						if (sizeof($advice)>0){
+						foreach($advice as $adv){
+								echo "<p id='advice'>" . $adv['msg'] . "</p>";
+							}
+						} else {
+							echo "<p id='advice'>Sorry, no advice for this campaign!</p>";
+						}
+					}
+					echo "<hr>";
+					/* URL STATS */	
+					
 
-						$retval = $api->campaignContent($cid);
-						$retval = $api->campaigns();
+					$stats = $api->campaignClickStats($cid);
 
 					if ($api->errorCode){
 						echo "Unable to Pull list of Campaign!";
 						echo "\n\tCode=".$api->errorCode;
 						echo "\n\tMsg=".$api->errorMessage."\n";
 					} else {
-						echo "<table><tr>
-						<td>Name</td>
-						<td>ID</td>
-						<td>List in use</td>
-						<td>Status</td>
-						<td>Type</td>
-						<td>Last time send</td>
-						<td>Optiot</td>
-						</tr>";
-						$counter = 0;
-						foreach($retval['data'] as $c){
-							echo "<tr><td><p>" . ucfirst($c['title']) . "</p></td><td>" . $c['id'] . "</td>";
-							echo "<td>" . ucfirst($lname[array_search($c['list_id'], $lid)]) . "</td>";
-							echo "<td>" .
-							ucfirst($c['status']) . $statusd . "</td><td>" . ucfirst($c['type']) . "</td>";
+						if (sizeof($stats)==0){
+							echo "No stats for this campaign yet!\n";
+						} else {
+							echo "<table id='urltable'><tr>
+							<td>URL</td><td>Clicks</td><td>Unique</td></tr>";
+							foreach($stats as $url=>$detail){
+								echo "<tr><td>" . $url . "</td><td>" . $detail['clicks']. "</td><td>" . $detail['unique'] . "</td></tr>";
+							}
+							echo "</table>";
 						}
-						echo "</table>
+					}
+					echo "<hr>";
+					/* UNSUBS */
+					
+					$stats = $api->campaignUnsubscribes($cid);
+					
+					if ($api->errorCode){
+						echo "Unable to Pull list of Campaign!";
+						echo "\n\tCode=".$api->errorCode;
+						echo "\n\tMsg=".$api->errorMessage."\n";
+					} else {
+						if ($stats['total'] <= 0) {
+							echo "<p style='text-align:center'>Yay! No one has unsubscribed from this campaign</p>";
+						}else{
+							echo "<table id='unsubtable'><tr>
+							<td>Unsubbed e-mail</td><td>Reason</td><td>Optional text</td></tr>";
+							foreach($stats['data'] as $d) {
+								echo "<tr><td>" . $d['email'] . "</td><td>" . ucfirst(strtolower($d['reason'])) . "</td><td>" . $d['reason_text'] . "</td></tr>";
+							}
+							echo "</table>";
+						}
 					}
 					?>
-					</div>
 				</div>
 			</div>
 		</div>
