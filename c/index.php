@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="../css/normalize.css">
 	<link rel="stylesheet" href="../css/main.css">
 	<script src="../js/vendor/modernizr-2.6.2.min.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Cuprum|Text+Me+One' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -70,7 +69,7 @@
 						<td>Status</td>
 						<td>Type</td>
 						<td>Last time send</td>
-						<td>Optiot</td>
+						<td>Actions</td>
 						</tr>";
 						$counter = 0;
 						foreach($retval['data'] as $c){
@@ -140,8 +139,14 @@
 							echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/></td></tr>";
 						}
 						echo "</table><br>
-						<p style='float:left;margin:0 0 0 10px;padding:0;'>Found " . sizeof($retval['data']) . " Campaign(s).</p>
-						<input style='float:right;' id='new_c' type='button' value='Add a New Campaign'>";
+						<p style='float:left;margin:0 0 0 10px;padding:0;'>Found " . sizeof($retval['data']);
+						if ($retval['data'] == 1) {
+							echo " Campaign";
+						}else{
+							echo " Campaigns";
+						}
+						echo ".</p>
+						<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'>";
 					}
 				?>
 			</div>

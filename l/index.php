@@ -12,9 +12,9 @@
     
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css"
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css"
+    <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
   </head>
 	
 	
@@ -38,21 +38,9 @@
         <div id="main">
     
     <?php
-    
-    // This file is for manually adding customers to db.
-
-      // API key : 2c1ba739504ba2364a7111a8d2231fe0-us6
-      
-      // API CALL FORMAT: https://us6.api.mailchimp.com/1.3/?output=OUTPUT_FORMAT&method=SOME-METHOD&[other parameters]
-    
-        // add to list: listBatchSubscribe(string apikey, string id, array batch,
-        // boolean double_optin, boolean update_existing, boolean replace_interests)
-      
-      
-      function showLists() {
-      
-        require_once 'inc/MCAPI.class.php'; // MailChimpAPI
-        require_once 'inc/config.inc.php'; // contains apikey
+		function showLists() {
+        require_once '../inc/MCAPI.class.php'; // MailChimpAPI
+        require_once '../inc/config.inc.php'; // contains apikey
       
         $api = new MCAPI($apikey);
 
@@ -83,9 +71,9 @@
           echo "<td>" . $list['stats']['cleaned_count'] . "</td>";
           echo "<td> 
           <input id='id" . $counter . "' type='hidden' name='id' value='" . $list['id'] . "'>
-          <img title='Delete' class='mo' id='d" . $counter . "' src='img/delete.png' alt='Delete'/>
-          <img title='Modify' class='mo' id='m" . $counter . "' src='img/modify.png' alt='Modify'/>
-          <img title='Statistics' class='mo' id='s" . $counter . "' src='img/statistics.png' alt='Statistics'/>
+          <img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>
+          <img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>
+          <img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>
           </td></tr>";
         }
         echo "</table><br>";
@@ -125,15 +113,8 @@
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
 	</body>
 </html>

@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="../css/normalize.css">
 	<link rel="stylesheet" href="../css/main.css">
 	<script src="../js/vendor/modernizr-2.6.2.min.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Cuprum|Text+Me+One' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -72,7 +71,7 @@
 					<textarea name="text" id="text" cols="30" rows="10">Text text text *|UNSUB|*
 					</textarea>
 					<br>
-					<input style='float:right;position:relative;right:10px;' type="submit" value='Create a New Campaing!'>
+					<input style='float:right;position:relative;right:10px;width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' type="submit" value='Create a New Campaing!'>
 					</form>
 				</div>
 			</div>

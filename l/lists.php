@@ -4,8 +4,8 @@
   // This code shows specified account's subscription lists
   // Account is specified with the $apikey
   
-  require_once 'inc/MCAPI.class.php'; // MailChimpAPI
-  require_once 'inc/config.inc.php'; // contains apikey
+  require_once '../inc/MCAPI.class.php'; // MailChimpAPI
+  require_once '../inc/config.inc.php'; // contains apikey
   
   $api = new MCAPI($apikey);
 

@@ -15,8 +15,6 @@
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/main.css">
         <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Cuprum|Text+Me+One' rel='stylesheet' type='text/css'>
-
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -91,7 +89,7 @@
 						echo "\n\tMsg=".$api->errorMessage."\n";
 					} else {
 						if ($stats['total'] <= 0) {
-							echo "<p style='text-align:center'>Yay! No one has unsubscribed from this campaign</p>";
+							echo "<p style='text-align:center'>Yay! No one has unsubscribed.</p>";
 						}else{
 							echo "<table id='unsubtable'><tr>
 							<td>Unsubbed e-mail</td><td>Reason</td><td>Optional text</td></tr>";
