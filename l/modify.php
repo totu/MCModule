@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -37,19 +37,30 @@
         </div>
         <div id="main">
     
-					<?php
-						require_once "./lists.php"; // lists.php contains function called renderLists() and getLists().
-						
-						renderLists(); // renders lists
-					
-					?>
-					
-					<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-					<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-					<script src="../js/plugins.js"></script>
-					<script src="./js/main.js"></script>
-				</div>
-			</div>
-		</div>
+    <?php
+		require_once './filters.inc.php';
+		
+		// form for Batch update. You can choose filter from dropdown list
+		echo '<form name="batch" action="addToList.php" method="post">';
+		echo '<p> <select name="formFilter">';
+		foreach ($filters as $key => $value ){
+			echo '<option value=' .  $key . '>' . ucfirst($key) . '</option>';
+		}
+		
+		echo "</select> </p>";
+		echo '<input type="checkbox" name="options[]" value="optin">Send optin emails<br>';
+		echo '<input type="checkbox" name="options[]" value="up_exist">Update currently subscribed users<br>';
+		echo '<input type="checkbox" name="options[]" value="replace_int">Replace interests<br>';
+		
+		echo "<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='up_batch' type='submit' value='Update'>";
+		echo "</form>";
+		
+    ?>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+    <script src="../js/plugins.js"></script>
+    <script src="./js/main.js"></script>
+
 	</body>
 </html>

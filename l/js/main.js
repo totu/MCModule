@@ -8,8 +8,8 @@ $(document).ready(function() {
 	
 	
 	$('.mo').mousedown(function() {
-		var cid = $('#id' + $(this).attr('id')[$(this).attr('id').length-1]).val();
-		$.cookie('cid', cid);
+		var lid = $('#id' + $(this).attr('id')[$(this).attr('id').length-1]).val();
+		$.cookie('lid', lid);
 		if ($(this).attr('id')[$(this).attr('id').length-2] == 'm') window.location = "./modify.php";
 		if ($(this).attr('id')[$(this).attr('id').length-2] == 'd') window.location = "./delete.php";
 		if ($(this).attr('id')[$(this).attr('id').length-2] == 's') window.location = "./statistic.php";
