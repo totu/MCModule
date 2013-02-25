@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -7,7 +6,7 @@
 	<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Lists</title>
+		<title>Lists - Statistics </title>
     <meta name="description" content>
     <meta name="viewport" content="width=device-width">
     
@@ -38,14 +37,21 @@
         </div>
         <div id="main">
 
-<?php
-	
+			<?php
+				include './listMembers.php';
+				$lid = $_COOKIE['lid'] ;
+				
+				echo "Statistics for " . $_COOKIE["lt"] . ' - list' ;
+				showMembers($lid,'subscribed');
+				showMembers($lid,'unsubscribed');
+			?>
 
-?>
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-    <script src="../js/plugins.js"></script>
-    <script src="./js/main.js"></script>
-
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+			<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+			<script src="../js/plugins.js"></script>
+			<script src="./js/main.js"></script>
+		</div>
+	    </div>
+	 </div>
 	</body>
 </html>
