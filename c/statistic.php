@@ -20,7 +20,7 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
+		<div id="explain"></div>
         <div id="wrapper">
 			<div id="header">
 				<input type="textbox" id='username' name='username' value='Username'>
@@ -34,32 +34,60 @@
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
-					<?php
-						require_once '../inc/MCAPI.class.php';
-						require_once '../inc/config.inc.php'; //contains apikey
-						$cid = $_COOKIE['cid'];
-						$api = new MCAPI($apikey);
 					
-					/* ADVICE ON CAMPAING */
-					$advice = $api->campaignAdvice($cid);
- 
+					<?php
+					require_once '../inc/MCAPI.class.php';
+					require_once '../inc/config.inc.php';
+					$cid = $_COOKIE['cid'];
+					$api = new MCAPI($apikey);
+
+					$retval = $api->campaigns();
 					if ($api->errorCode){
-							echo "Unable to run campaignAdvice()!\n";
-					echo "\tCode=".$api->errorCode."\n";
-							echo "\tMsg=".$api->errorMessage."\n";
+						echo "Unable to Pull list of Campaign!";
+						echo "\n\tCode=".$api->errorCode;
+						echo "\n\tMsg=".$api->errorMessage."\n";
 					} else {
-						if (sizeof($advice)>0){
-						foreach($advice as $adv){
-								echo "<p id='advice'>" . $adv['msg'] . "</p>";
-							}
-						} else {
-							echo "<p id='advice'>Sorry, no advice for this campaign!</p>";
+						$mcid = array();
+						$cname = array();
+						foreach($retval['data'] as $c) {
+							array_push($mcid,$c['id']);
+							array_push($cname,$c['title']);				
 						}
 					}
+					
+					/* BASIC STATS */
+					
+					$retval = $api->campaignStats($cid);
+ 
+					if ($api->errorCode){
+						echo "Unable to Load Campaign Stats!";
+						echo "\n\tCode=".$api->errorCode;
+						echo "\n\tMsg=".$api->errorMessage."\n";
+					} else {
+						echo "<table id='stattable'><tr>
+							<th colspan='9'> Stats for  " . 
+							ucfirst($cname[array_search($cid, $mcid)]) . "</th></tr><tr>
+							<td class='hb'>Hard Bounces</td>
+							<td class='sb'>Soft Bounces</td>
+							<td>Abuse Reports</td>
+							<td class='explain'>Opens</td>
+							<td class='explain'>Clicks</td>
+							<td>Last Click</td>
+							<td>Emails Sent</td>
+							</tr><tr>
+							<td class='hb'>" . $retval['hard_bounces'] . "</td>
+							<td class='sb'>" . $retval['soft_bounces'] . "</td>
+							<td>" . $retval['abuse_reports'] . "</td>
+							<td class='explain'>" . $retval['unique_opens'] . " (" . $retval['opens'] . ")</td>
+							<td class='explain'>" . $retval['unique_clicks'] . " (" . $retval['clicks'] . ")</td>
+							<td>" . $retval['last_click'] . "</td>
+							<td>" . $retval['emails_sent'] . "</td>
+							</tr>";
+					}
+					echo "</table>";
 					echo "<hr>";
 					/* URL STATS */	
 					
-
 					$stats = $api->campaignClickStats($cid);
 
 					if ($api->errorCode){
@@ -68,7 +96,7 @@
 						echo "\n\tMsg=".$api->errorMessage."\n";
 					} else {
 						if (sizeof($stats)==0){
-							echo "No stats for this campaign yet!\n";
+							echo "<center>No stats for this campaign yet!</center>";
 						} else {
 							echo "<table id='urltable'><tr>
 							<td>URL</td><td>Clicks</td><td>Unique</td></tr>";
@@ -92,9 +120,11 @@
 							echo "<p style='text-align:center'>Yay! No one has unsubscribed.</p>";
 						}else{
 							echo "<table id='unsubtable'><tr>
-							<td>Unsubbed e-mail</td><td>Reason</td><td>Optional text</td></tr>";
+							<td>Unsubscribed addresses</td><td>Reason</td><td>Optional text</td></tr>";
 							foreach($stats['data'] as $d) {
-								echo "<tr><td>" . $d['email'] . "</td><td>" . ucfirst(strtolower($d['reason'])) . "</td><td>" . $d['reason_text'] . "</td></tr>";
+								$reason = '-';
+								if ($d['reason_text'] != '') { $reason = $d['reason_text'];}
+								echo "<tr><td>" . $d['email'] . "</td><td>" . ucfirst(strtolower($d['reason'])) . "</td><td>" . $reason . "</td></tr>";
 							}
 							echo "</table>";
 						}

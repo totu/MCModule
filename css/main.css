@@ -280,12 +280,6 @@ input {
 		width:300px;
 	}
 
-	#advice {
-		text-align:center;
-		font-size:14px;
-		margin:25px 0 0 0;
-	}
-
 	hr {
 		opacity:0.3;
 		height:1px;
@@ -293,6 +287,39 @@ input {
 		margin:35px auto;
 		border-top:1px solid #000;
 		width:95%;
+	}
+	
+	#stattable th {
+		padding: 5px 0 10px;
+		font-size:18px;
+		font-weight:400;
+	}
+	
+	#stattable td {
+		font-size: 14px;
+		width:150px;
+	}
+	
+	#explain {
+		background:#fff;
+		z-index:2;
+		display:none;
+		position:absolute;
+		min-width:150px;
+		min-height:50px;
+		border-radius:5px;
+		border:1px solid #000;
+		box-shadow:2px 2px 4px #000;
+	}
+	.arrow-up {
+		position:relative;
+		top:-49px;
+		left:65px;
+		width: 0; 
+		height: 0; 
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-bottom: 10px solid #000;
 	}
 /* ==========================================================================
    Helper classes

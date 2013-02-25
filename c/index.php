@@ -128,17 +128,20 @@
 							echo "<td>" .
 							ucfirst($c['status']) . $statusd . "</td><td>" . ucfirst($c['type']) . "</td>";
 							echo "<td>" . $date . "</td>";
-							echo "<td> 
+							echo "<td style='text-align:left;'> 
 							<input id='id" . $counter . "' type='hidden' name='id' value='" . $c['id'] . "'>
 							<input id='t" . $counter . "' type='hidden' name='t' value='" . $c['title'] . "'>";
 							if ($c['status'] != 'sent') {							
 								echo "<img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>";
+								echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
+								echo "<img title='Send' class='mo' id='n" . $counter . "' src='../img/send.png' width='30' alt='Send'/>";
 							}else{
 								echo "<img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>";
+								echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
 							}
-							echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/></td></tr>";
+							
 						}
-						echo "</table><br>
+						echo "</td></tr></table><br>
 						<p style='float:left;margin:0 0 0 10px;padding:0;'>Found " . sizeof($retval['data']);
 						if ($retval['data'] == 1) {
 							echo " Campaign";

@@ -1,6 +1,7 @@
 ﻿<?php
 	require_once '../inc/MCAPI.class.php';
 	require_once '../inc/config.inc.php'; //contains apikey
+
 	
 	$api = new MCAPI($apikey);
 	
@@ -35,19 +36,19 @@
 	
 	// read database according to the filter
 	function readCustomers() {
-	
+		include '../inc/config.inc.php';
 		if(($filter = getFilter())){
-		
-			$con = mysql_connect("localhost","testi","");
+			
+			$con = mysql_connect($location,$user,$password);
 			if (!$con)
 			{
 				die('Could not connect: ' . mysql_error());
 			}
 			
 			// select php_testi
-			mysql_select_db("php_testi", $con);
+			mysql_select_db($db, $con);
 			
-			// Get customers data and echo it
+			// Get customers data
 			$customers = mysql_query($filter);
 			
 			while($row = mysql_fetch_array($customers))
@@ -82,7 +83,7 @@
 	$optin = IsChecked('options','optin'); //yes, send optin emails
 	$up_exist = IsChecked('options','up_exist'); // yes, update currently subscribed users
 	$replace_int = IsChecked('options','replace_int'); // no, add interest, don't replace
-	$listId = $_COOKIE['cid'];
+	$listId = $_COOKIE['lid'];
 
 	$vals = $api->listBatchSubscribe($listId,$batch,$optin, $up_exist, $replace_int);
 

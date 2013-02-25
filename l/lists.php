@@ -17,7 +17,7 @@ function getLists() {
 	}
 }
 
-
+// renders list as a table
 function renderLists() {
 	
 	$retval = getLists();
@@ -43,13 +43,14 @@ function renderLists() {
 			echo "<td>" . $list['stats']['cleaned_count'] . "</td>";
 			echo "<td> 
 			<input id='id" . $counter . "' type='hidden' name='id' value='" . $list['id'] . "'>
+			<input id='t" . $counter . "' type='hidden' name='t' value='" . $list['name'] . "'>
 			<img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>
 			<img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>
 			</td></tr>";
 		}
 		echo "</table><br>";
-		echo "Lists that matched:".$retval['total']."<br>";
-		echo "Lists returned:".sizeof($retval['data'])."<br>";
+		//echo "Lists that matched:".$retval['total']."<br>";
+		//echo "Lists returned:".sizeof($retval['data'])."<br>";
 
 	}
 }
