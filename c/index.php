@@ -131,7 +131,7 @@
 							echo "<td style='text-align:left;'> 
 							<input id='id" . $counter . "' type='hidden' name='id' value='" . $c['id'] . "'>
 							<input id='t" . $counter . "' type='hidden' name='t' value='" . $c['title'] . "'>";
-							if ($c['status'] != 'sent') {							
+							if ($c['status'] != 'sent' && $c['status'] != 'sending') {							
 								echo "<img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>";
 								echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
 								echo "<img title='Send' class='mo' id='n" . $counter . "' src='../img/send.png' width='30' alt='Send'/>";
