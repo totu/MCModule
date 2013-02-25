@@ -52,7 +52,7 @@
 				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="optin">Send optin emails<br>';
 				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="up_exist">Update currently subscribed users<br>';
 				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="replace_int">Replace interests<br>';
-				
+				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="clear">Clear list before updating<br>';
 				echo "<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='up_batch' type='submit' value='Update'>";
 				echo "</form>";
 				

@@ -1,13 +1,7 @@
 ﻿<?php
-	require_once '../inc/MCAPI.class.php';
-	require_once '../inc/config.inc.php'; //contains apikey
-
-	
-	$api = new MCAPI($apikey);
-	
 	
 	function getFilter(){
-		require_once './filters.inc.php';
+		require './filters.inc.php';
 		
 		// get selected filterName and then use that to get the wanted query.
 		$filterName = $_POST['formFilter'];
@@ -36,7 +30,7 @@
 	
 	// read database according to the filter
 	function readCustomers() {
-		include '../inc/config.inc.php';
+		require '../inc/config.inc.php';
 		if(($filter = getFilter())){
 			
 			$con = mysql_connect($location,$user,$password);
@@ -73,7 +67,51 @@
 			return false;
 		}
 	}
+	
+	function batchUnsubscribe($emails,$delete,$bye,$notify){
+		require_once '../inc/MCAPI.class.php';
+		require '../inc/config.inc.php'; //contains apikey
 
+		$api = new MCAPI($apikey);
+
+		$vals = $api->listBatchUnsubscribe($_COOKIE["lid"], $emails, $delete, $bye, $notify);
+
+		if ($api->errorCode){
+			// an api error occurred
+			echo "code:".$api->errorCode."\n";
+			echo "msg :".$api->errorMessage."\n";
+			throw new Exception('batchUnsubscribe Failed');
+		} else {
+			return;
+		}
+	}
+	
+	function clearList() {
+		require './listMembers.php';
+		
+		$members = getMembers($_COOKIE["lid"],"Subscribers");
+		$clearBatch = array();
+		
+		foreach($members['data'] as $member){
+			array_push($clearBatch,$member['email']);
+		}
+		
+		batchUnsubscribe($clearBatch,true,false,false);
+	}
+	
+/////////////////////////// START ////////////////////////////////
+	
+	require_once '../inc/MCAPI.class.php';
+	require '../inc/config.inc.php'; //contains apikey
+	$api = new MCAPI($apikey);
+
+
+	if(IsChecked('options','clear')){
+		clearList();
+	}
+	
+	
+	
 	if(!($batch = readCustomers())) {
 		trigger_error('$batch is empty');
 	}

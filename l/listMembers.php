@@ -1,8 +1,8 @@
 <?php	
 
-	function showMembers($listId,$status) {
+	function getMembers($listId,$status){
 		require_once '../inc/MCAPI.class.php'; // MailChimpAPI
-		include '../inc/config.inc.php'; // contains apikey
+		require '../inc/config.inc.php'; // contains apikey
 		
 		$api = new MCAPI($apikey);
 	
@@ -15,7 +15,18 @@
 			echo "Unable to load listMembers()!";
 			echo "\n\tCode=".$api->errorCode;
 			echo "\n\tMsg=".$api->errorMessage."\n";
-		} else {		
+			throw new Exception('Failed to get Members');
+			return false;
+			} else {
+				return $retval;
+			}
+	}
+
+	function showMembers($listId,$status) {
+			
+		if (!($retval = getMembers($listId,$status))) {
+			return false;
+		} else {
 			echo "<table>
 			<tr><th colspan='2'>" . ucfirst($status) . "</th></tr>
 			<tr>
