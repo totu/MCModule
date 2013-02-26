@@ -31,6 +31,68 @@
 	 *  Campaign related functions  *
 	 * ============================ */
 	
+	function MCM_campaignUnsubs($cid) {
+		$retval = $api->campaignUnsubscribes($cid);
+		if ($api->errorCode) {
+			$return = $api->errorMessage;
+		} elseif ($retval['total'] <= 0) {
+			$return = "Yay! No one has unsubscribed because of this campaign."
+		} else {
+			$return = "<table>
+			<tr><td>Unsubscribed address</td>
+			<td>Reason</td><
+			<td>Optional text</td></tr>";
+			// TÄHÄN JÄIT 
+		}
+	}
+	
+	function MCM_campaignClicks($cid) {
+		$retval = $api->campaignClickStats($cid);
+		if ($api->errorCode || sizeof($retval) == 0) {
+			$return = "No detailed click statistics available for this campaign yet!";
+		} else {
+			$return = "<table>
+			<tr><td>URL</td>
+			<td>Clicks</td>
+			<td>Unique</td></tr>";
+			foreach($retval as $url=>$d) {
+				$return += "<table>
+				<tr><td>" . $url . "</td>
+				<td>" . $d['clicks'] "</td>
+				<td>" . $d['unique'] "</td></tr>";
+			}
+			$return += "</table>";
+		}
+		return $return;
+	}
+	
+	function MCM_campaignStats($cid) {
+		$retval = $api->campaignStats();
+		if ($api->errorCode) {
+			$return = "Unable to load campaign statistics!";
+		} else {
+			$return = "<table>
+			<tr><th colspan='9' Statistics for " . MCM_getName($cid, 'campaign') . "</th></tr><tr>
+			<td class='hb'>Hard Bounces</td>
+			<td class='sb'>Soft Bounces</td>
+			<td>Abuse Reports</td>
+			<td class='explain'>Opens</td>
+			<td class='explain'>Clicks</td>
+			<td>Last Click</td>
+			<td>Emails Sent</td>
+			</tr><tr>
+			<td class='hb'>" . $retval['hard_bounces'] . "</td>
+			<td class='sb'>" . $retval['soft_bounces'] . "</td>
+			<td>" . $retval['abuse_reports'] . "</td>
+			<td class='explain'>" . $retval['unique_opens'] . " (" . $retval['opens'] . ")</td>
+			<td class='explain'>" . $retval['unique_clicks'] . " (" . $retval['clicks'] . ")</td>
+			<td>" . MCM_fixDate($retval['last_click']) . "</td>
+			<td>" . $retval['emails_sent'] . "</td></tr>
+			</table>";
+		}
+		return $return;
+	}
+	
 	function MCM_campaigns() {
 		$retval = $api->campaigns();
 		if ($api->errorCode) {
@@ -50,20 +112,32 @@
 			foreach($retval['data'] as $c) {
 				$return += "<tr><td>" . ucfirst($c['title']) . "</td>
 				<td>" . $c['id'] . "</td><td>
-				<td>" . MCM_getListName($c['list_id']) . "</td>
+				<td>" . MCM_getName($c['list_id'], 'list') . "</td>
 				<td>" . MCM_fixStatus($c['stauts']) . "</td>
 				<td>" . ucfirst($c['type']) . "</td>
 				<td>" . MCM_fixDate($c['send_time']) . "</td>
-				<td>" . MCM_generateActions($c['satus']) . "</td></tr>"; 
+				<td>" . MCM_generateActions($c['satus'], $c['id'], $c['title'], $counter) . "</td></tr>"; 
 			}
+			$return += "</table>";
 		}
+		return $return;
 	}
 	
-	// function MCM_generateActions($status) {
-		// if ($status == 'save') {
-			// $return = 
-		// }
-	// }
+	function MCM_generateActions($status, $id, $title, $c) {
+		$return = "<input id='id" . $c . "' type='hidden' name='id' value='" . $id . "'>
+		<input id='t" . $c . "' type='hidden' name='t' value='" . $title . "'>";
+		if ($status == 'save') {
+			$return += "
+			<img title='Modify' class='mo' id='m" . $c . "' src='../img/modify.png' width='30' alt='Modify' />
+			<img title='Delete' class='mo' id='d" . $c . "' src='../img/delete.png' width='30' alt='Delete' />
+			<img title='Send' class='mo' id='n" . $c . "' src='../img/send.png' width='30' alt='Send' />";
+		} else {
+			$return += "
+			<img title='Statistics' class='mo' id='s" . $c . "' src='../img/statistics.png' width='30' alt='Statistics' />
+			<img title='Delete' class='mo' id='d" . $c . "' src='../img/delete.png' width='30' alt='Delete' />";
+		}
+		return $return;
+	}
 	
 	function MCM_fixStatus($str) {
 		if ($str != null && $str != '') {
@@ -146,21 +220,39 @@
 		}
 	}
 	 
-	 function MCM_getListName($lid) {
+		function MCM_getName($lid, $opt) {
+		if ($opt == 'list') {
+			$retval = $api->lists();
+		} else {
+			$retval = $api->campaigns();
+		}
+			if ($api->errorCode) {
+				$return = $api->errorCode;
+			} else {
+				$id = array();
+				$name = array();
+				foreach ($retval['data'] as $l) {
+					array_push($id,$l['id']);
+					array_push($name,$l['name']);
+				}
+				$return = $name[array_search($lid, $id)];
+			}
+		return ucfirst(strtolower($return));
+	}
+	
+	function MCM_listDropdown() {
 		$retval = $api->lists();
 		if ($api->errorCode) {
-			$return = $api->errorCode;
+			$return = "Unable to load lists()!";
 		} else {
-			$id = array();
-			$name = array();
+			$return = "<select name='lid'>";
 			foreach ($retval['data'] as $l) {
-				array_push($id,$l['id']);
-				array_push($name,$l['name']);
+				$return += "<option value='" . $l['id'] . "'>" . MCM_getListName($l['id']) . "</option">;
 			}
-			$return = $name[array_search($lid, $id)];
+			$return += "</select">;
 		}
 		return $return;
-	 }
+	}
 	 
 	 // renders list as a table
 	function renderLists() {
