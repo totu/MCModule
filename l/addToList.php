@@ -130,17 +130,10 @@
 		echo "Batch Subscribe failed! <br>";
 		echo "code:".$api->errorCode."<br>";
 		echo "msg :".$api->errorMessage."<br>";
+		throw new Exception('addToList Failed');
+		
 	} else {
 	// RESULTS
-		echo "added:   ".$vals['add_count']."<br>";
-		echo "updated: ".$vals['update_count']."<br>";
-		echo "errors:  ".$vals['error_count']."<br>";
-		
-		foreach($vals['errors'] as $val){
-			echo $val['email_address']. " failed<br>";
-			echo "code:".$val['code']."<br>";
-			echo "msg :".$val['message']."<br>";
-		}
 		header( 'Location: .' ) ;
 	}
 	

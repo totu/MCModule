@@ -11,7 +11,7 @@ function getLists() {
 		echo "Unable to load lists()!";
 		echo "\n\tCode=".$api->errorCode;
 		echo "\n\tMsg=".$api->errorMessage."\n";
-		return false;
+		throw new Exception('getLists Failed');
 	} else {
 		return $retval;
 	}
