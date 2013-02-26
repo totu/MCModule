@@ -28,7 +28,13 @@
 			return false;
 		} else {
 			echo "<table>
-			<tr><th colspan='2'>" . ucfirst($status) . "</th></tr>
+			<tr><th ";
+			if ($status == "unsubscribed"){
+				echo "colspan='4'>";
+			} else {
+				echo "colspan='2'>";
+			}
+			echo  ucfirst($status) . "</th></tr>
 			<tr>
 			<td>Email</td>
 			<td>Date</td>";
