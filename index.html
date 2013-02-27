@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -20,7 +20,7 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-		<div id="explain"></div>
+
         <div id="wrapper">
 			<div id="header">
 				<input type="textbox" id='username' name='username' value='Username'>
@@ -34,14 +34,9 @@
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
-					
-					<?php
-					require_once '../mcm.php';
-					$cid = $_COOKIE['cid'];
-					echo MCM_campaignStats($cid) . "<hr>" .
-					MCM_campaignClicks($cid) . "<hr>" .
-					MCM_campaignUnsubs($cid);
-					?>
+				
+					<h1 style='text-align:center;margin-top:100px;font-size:60px;'>Here be dragons!</h1>
+				
 				</div>
 			</div>
 		</div>
@@ -50,6 +45,5 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
         <script src="../js/plugins.js"></script>
         <script src="../js/main.js"></script>
-
     </body>
 </html>

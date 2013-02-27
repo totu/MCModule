@@ -37,122 +37,12 @@
 			<div id="main">
 				<?php
 					require_once '../inc/MCAPI.class.php';
-					require_once '../inc/config.inc.php'; //contains apikey
-
-					$api = new MCAPI($apikey);
-					$lval = $api->lists();
+					require_once '../inc/config.inc.php';
+					require_once '../mcm.php';
 					
-					if ($api->errorCode){
-						echo "Unable to load lists()!";
-						echo "<br>Code=".$api->errorCode;
-						echo "<br>Msg=".$api->errorMessage."<br>";
-					} else {
-						$lid = array();
-						$lname = array();
-						foreach ($lval['data'] as $list){
-							array_push($lid,$list['id']);
-							array_push($lname,$list['name']);				
-						}
-					}
-					
-					$retval = $api->campaigns();
-
-					if ($api->errorCode){
-						echo "Unable to Pull list of Campaign!";
-						echo "\n\tCode=".$api->errorCode;
-						echo "\n\tMsg=".$api->errorMessage."\n";
-					} else {
-						echo "<table><tr>
-						<td>Name</td>
-						<td>ID</td>
-						<td>List in use</td>
-						<td>Status</td>
-						<td>Type</td>
-						<td>Last time send</td>
-						<td>Actions</td>
-						</tr>";
-						$counter = 0;
-						foreach($retval['data'] as $c){
-							$statusd = '';
-							if ($c['status'] == 'save') { $statusd = 'd'; }
-							$counter++;
-							if ($c['send_time'] != null) {
-								$t = explode(" ",$c['send_time']);
-								$t = explode("-",$t[0]);
-								$num = (int)$t[1];
-								switch ($num) {
-								case 1:
-									$m = 'Jan';
-									break;
-								case 2:
-									$m = 'Feb';
-									break;
-								case 3:
-									$m = 'Mar';
-									break;
-								case 4:
-									$m = 'Apr';
-									break;
-								case 5:
-									$m = 'May';
-									break;
-								case 6:
-									$m = 'Jun';
-									break;
-								case 7:
-									$m = 'Jul';
-									break;
-								case 8:
-									$m = 'Aug';
-									break;
-								case 9:
-									$m = 'Sep';
-									break;
-								case 10:
-									$m = 'Oct';
-									break;
-								case 11:
-									$m = 'Nov';
-									break;
-								case 12:
-									$m = 'Dec';
-									break;
-								}
-								$date = $t[2] . " " . $m . " " . $t[0];
-							} else {
-								$date = "";
-							}
-
-							echo "<tr><td><p>" . ucfirst($c['title']) . "</p></td><td>" . $c['id'] . "</td>";
-							echo "<td>" . ucfirst($lname[array_search($c['list_id'], $lid)]) . "</td>";
-							echo "<td>" .
-							ucfirst($c['status']) . $statusd . "</td><td>" . ucfirst($c['type']) . "</td>";
-							echo "<td>" . $date . "</td>";
-							echo "<td style='text-align:left;'> 
-							<input id='id" . $counter . "' type='hidden' name='id' value='" . $c['id'] . "'>
-							<input id='t" . $counter . "' type='hidden' name='t' value='" . $c['title'] . "'>";
-							//change actions according to status
-							if ($c['status'] != 'sent' && $c['status'] != 'sending') {							
-								echo "<img title='Modify' class='mo' id='m" . $counter . "' src='../img/modify.png' width='30' alt='Modify'/>";
-								echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
-								echo "<img title='Send' class='mo' id='n" . $counter . "' src='../img/send.png' width='30' alt='Send'/>";
-							}else{
-								echo "<img title='Statistics' class='mo' id='s" . $counter . "' src='../img/statistics.png' width='30' alt='Statistics'/>";
-								echo "<img title='Delete' class='mo' id='d" . $counter . "' src='../img/delete.png' width='30' alt='Delete'/>";
-							}
-							
-						}
-						echo "</td></tr></table><br>
-						<p style='float:left;margin:0 0 0 10px;padding:0;'>Found " . sizeof($retval['data']);
-						if ($retval['data'] == 1) {
-							echo " Campaign";
-						}else{
-							echo " Campaigns";
-						}
-						echo ".</p>
-						<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'>";
-					}
+					echo MCM_campaigns();
 				?>
+				<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'>
 			</div>
 		</div>
 	</div>
