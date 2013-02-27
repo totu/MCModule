@@ -38,7 +38,7 @@
         <div id="main">
 
 			<?php
-				include './listMembers.php';
+				require_once '../mcm.php';
 				$lid = $_COOKIE['lid'] ;
 				
 				echo "Statistics for " . $_COOKIE["lt"] . ' - list' ;
