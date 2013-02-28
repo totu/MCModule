@@ -42,15 +42,9 @@
 			$return = "Yay! No one has unsubscribed because of this campaign.";
 		} else {
 			$return = "<table>
-<<<<<<< HEAD
 			<tr><td style='width:400px;'>Unsubscribed address</td>
 			<td>Reason</td>
 			<td style='width:300px;'>Optional text</td></tr>";
-=======
-			<tr><td>Unsubscribed address</td>
-			<td>Reason</td>
-			<td>Optional text</td></tr>";
->>>>>>> d30aed458408023104932904a988ed8ddf527642
 			foreach($retval['data'] as $d) {
 				$r = '-';
 				if ($d['reason_text'] != '') { $r = $d['reason_text']; }
@@ -74,11 +68,7 @@
 			$return = "No detailed click statistics available for this campaign yet!";
 		} else {
 			$return = "<table>
-<<<<<<< HEAD
 			<tr><td style='width:600px;'>URL</td>
-=======
-			<tr><td>URL</td>
->>>>>>> d30aed458408023104932904a988ed8ddf527642
 			<td>Clicks</td>
 			<td>Unique</td></tr>";
 			foreach($retval as $url=>$d) {
@@ -102,17 +92,10 @@
 			$return = "Unable to load campaign statistics!";
 		} else {
 			$return = "<table>
-<<<<<<< HEAD
 			<tr><td colspan='7' style='font-weight:700;font-size:20px;'> Statistics for " . MCM_getName($cid, 'campaign') . "</td></tr><tr>
 			<td class='hb'>Hard Bounces</td>
 			<td class='sb'>Soft Bounces</td>
 			<td>Abuses</td>
-=======
-			<tr><th colspan='9' Statistics for " . MCM_getName($cid, 'campaign') . "</th></tr><tr>
-			<td class='hb'>Hard Bounces</td>
-			<td class='sb'>Soft Bounces</td>
-			<td>Abuse Reports</td>
->>>>>>> d30aed458408023104932904a988ed8ddf527642
 			<td class='explain'>Opens</td>
 			<td class='explain'>Clicks</td>
 			<td>Last Click</td>
@@ -142,7 +125,6 @@
 			$counter = 0;
 			$return = "<table>
 			<tr>
-<<<<<<< HEAD
 			<th>Name</th>
 			<th>ID</th>
 			<th>List</th>
@@ -150,15 +132,6 @@
 			<th>Type</th>
 			<th>Last time send</th>
 			<th>Actions</th>
-=======
-			<td>Name</td>
-			<td>ID</td>
-			<td>List</td>
-			<td>Status</td>
-			<td>Type</td>
-			<td>Last time send</td>
-			<td>Actions</td>
->>>>>>> d30aed458408023104932904a988ed8ddf527642
 			</tr>";
 			foreach($retval['data'] as $c) {
 				$return .= "<tr><td>" . ucfirst($c['title']) . "</td>
@@ -167,11 +140,7 @@
 				<td>" . MCM_fixStatus($c['status']) . "</td>
 				<td>" . ucfirst($c['type']) . "</td>
 				<td>" . MCM_fixDate($c['send_time']) . "</td>
-<<<<<<< HEAD
 				<td style='text-align:left;'>" . MCM_generateActions($c['status'], $c['id'], $c['title'], $counter) . "</td></tr>"; 
-=======
-				<td>" . MCM_generateActions($c['status'], $c['id'], $c['title'], $counter) . "</td></tr>"; 
->>>>>>> d30aed458408023104932904a988ed8ddf527642
 				$counter++;
 			}
 			$return .= "</table>";
