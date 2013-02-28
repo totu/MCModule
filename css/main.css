@@ -176,6 +176,7 @@ html,body {
 }
 
 #main {
+	text-align:center;
 	position:relative;
 	z-index:1;
 	border-top-left-radius:10px;
@@ -185,8 +186,7 @@ html,body {
 	box-shadow: 5px 5px 10px rgba(0,0,0,.2);
 	background:#fff;
 	width:800px;
-	padding:5px 0 45px;
-
+	padding:0 0 45px;
 	margin:0 auto 25px;
 	border:1px solid #111;
 }
@@ -202,16 +202,15 @@ input {
 /* ===================
 	Campaing specific
    =================== */ 
-	td p {
-		padding:5px 0;
-		margin:0;
-	}
-   
 	table,td {
 		border-collapse:collapse;
 		padding:2px;
-		margin:0 auto;
+		margin:0 auto 14px;
 		text-align:center;
+	}
+	
+	th {
+		font-weight:400;
 	}
 	
 	td {
@@ -255,7 +254,8 @@ input {
 	}
 
 	#padder {
-		padding:0 25px 45px 25px;
+		text-align:left;
+		padding:0 25px;
 	}
 
 	#createcampaigntable, #createcampaigntable td {
@@ -272,14 +272,6 @@ input {
 		width:140px;
 	}
 
-	#urltable td:first-child{
-		width:580px;
-	}
-	
-	#unsubtable td{
-		width:300px;
-	}
-
 	hr {
 		opacity:0.3;
 		height:1px;
@@ -287,17 +279,6 @@ input {
 		margin:35px auto;
 		border-top:1px solid #000;
 		width:95%;
-	}
-	
-	#stattable th {
-		padding: 5px 0 10px;
-		font-size:18px;
-		font-weight:400;
-	}
-	
-	#stattable td {
-		font-size: 14px;
-		width:150px;
 	}
 	
 	#explain {

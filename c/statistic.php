@@ -29,106 +29,18 @@
 			</div>
 			<div id="body">
 				<div id="tabs">
-					<div id='h' class="tab">Home</div>
+					<div id='h' class="tab">Settings</div>
 					<div id='l' class="tab">Lists</div>
 					<div id='c' class="tab">Campaigns</div>
 				</div>
 				<div id="main">
 					
 					<?php
-					require_once '../inc/MCAPI.class.php';
-					require_once '../inc/config.inc.php';
+					require_once '../mcm.php';
 					$cid = $_COOKIE['cid'];
-					$api = new MCAPI($apikey);
-
-					$retval = $api->campaigns();
-					if ($api->errorCode){
-						echo "Unable to Pull list of Campaign!";
-						echo "\n\tCode=".$api->errorCode;
-						echo "\n\tMsg=".$api->errorMessage."\n";
-					} else {
-						$mcid = array();
-						$cname = array();
-						foreach($retval['data'] as $c) {
-							array_push($mcid,$c['id']);
-							array_push($cname,$c['title']);				
-						}
-					}
-					
-					/* BASIC STATS */
-					
-					$retval = $api->campaignStats($cid);
- 
-					if ($api->errorCode){
-						echo "Unable to Load Campaign Stats!";
-						echo "\n\tCode=".$api->errorCode;
-						echo "\n\tMsg=".$api->errorMessage."\n";
-					} else {
-						echo "<table id='stattable'><tr>
-							<th colspan='9'> Stats for  " . 
-							ucfirst($cname[array_search($cid, $mcid)]) . "</th></tr><tr>
-							<td class='hb'>Hard Bounces</td>
-							<td class='sb'>Soft Bounces</td>
-							<td>Abuse Reports</td>
-							<td class='explain'>Opens</td>
-							<td class='explain'>Clicks</td>
-							<td>Last Click</td>
-							<td>Emails Sent</td>
-							</tr><tr>
-							<td class='hb'>" . $retval['hard_bounces'] . "</td>
-							<td class='sb'>" . $retval['soft_bounces'] . "</td>
-							<td>" . $retval['abuse_reports'] . "</td>
-							<td class='explain'>" . $retval['unique_opens'] . " (" . $retval['opens'] . ")</td>
-							<td class='explain'>" . $retval['unique_clicks'] . " (" . $retval['clicks'] . ")</td>
-							<td>" . $retval['last_click'] . "</td>
-							<td>" . $retval['emails_sent'] . "</td>
-							</tr>";
-					}
-					echo "</table>";
-					echo "<hr>";
-					/* URL STATS */	
-					
-					$stats = $api->campaignClickStats($cid);
-
-					if ($api->errorCode){
-						echo "Unable to Pull list of Campaign!";
-						echo "\n\tCode=".$api->errorCode;
-						echo "\n\tMsg=".$api->errorMessage."\n";
-					} else {
-						if (sizeof($stats)==0){
-							echo "<center>No stats for this campaign yet!</center>";
-						} else {
-							echo "<table id='urltable'><tr>
-							<td>URL</td><td>Clicks</td><td>Unique</td></tr>";
-							foreach($stats as $url=>$detail){
-								echo "<tr><td>" . $url . "</td><td>" . $detail['clicks']. "</td><td>" . $detail['unique'] . "</td></tr>";
-							}
-							echo "</table>";
-						}
-					}
-					echo "<hr>";
-					/* UNSUBS */
-					
-					$stats = $api->campaignUnsubscribes($cid);
-					
-					if ($api->errorCode){
-						echo "Unable to Pull list of Campaign!";
-						echo "\n\tCode=".$api->errorCode;
-						echo "\n\tMsg=".$api->errorMessage."\n";
-					} else {
-						if ($stats['total'] <= 0) {
-							echo "<p style='text-align:center'>Yay! No one has unsubscribed.</p>";
-						}else{
-							echo "<table id='unsubtable'><tr>
-							<td>Unsubscribed addresses</td><td>Reason</td><td>Optional text</td></tr>";
-							foreach($stats['data'] as $d) {
-								$reason = '-';
-								if ($d['reason_text'] != '') { $reason = $d['reason_text'];}
-								echo "<tr><td>" . $d['email'] . "</td><td>" . ucfirst(strtolower($d['reason'])) . "</td><td>" . $reason . "</td></tr>";
-							}
-							echo "</table>";
-						}
-					}
+					echo MCM_campaignStats($cid) . "<hr>" .
+					MCM_campaignClicks($cid) . "<hr>" .
+					MCM_campaignUnsubs($cid);
 					?>
 				</div>
 			</div>

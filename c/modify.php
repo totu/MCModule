@@ -29,7 +29,7 @@
 			</div>
 			<div id="body">
 				<div id="tabs">
-					<div id='h' class="tab">Home</div>
+					<div id='h' class="tab">Settings</div>
 					<div id='l' class="tab">Lists</div>
 					<div id='c' class="tab">Campaigns</div>
 				</div>

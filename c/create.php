@@ -30,7 +30,7 @@
 		</div>
 		<div id="body">
 			<div id="tabs">
-				<div id='h' class="tab">Home</div>
+				<div id='h' class="tab">Settings</div>
 				<div id='l' class="tab">Lists</div>
 				<div id='c' class="tab">Campaigns</div>
 			</div>
@@ -39,32 +39,19 @@
 					<form action="createAPI.php" method='post'>
 					<table id='createcampaigntable'>
 					<tr>
-					<td><label for='lid'>Select a list</label></td>
+					<td><label for='lid'>Select a list</label></td><td>
 					<?php
-						require_once '../inc/MCAPI.class.php';
-						require_once '../inc/config.inc.php'; //contains apikey	
-						$api = new MCAPI($apikey);
-						$retval = $api->lists();
-						if ($api->errorCode){
-							echo "Unable to load lists()!";
-							echo "<br>Code=".$api->errorCode;
-							echo "<br>Msg=".$api->errorMessage."<br>";
-						} else {
-							foreach ($retval['data'] as $list){
-								echo "<td><select name='lid'>
-										<option value='" . $list['id'] . "'>" . $list['name'] . "</option>
-									</select></td></tr>";
-					
-							}
-						}
+						require_once '../mcm.php';
+						echo MCM_listDropdown();
 					?>
+					</td></tr>
 					<br>
 					<tr><td><label for='subject'>Subject: </label></td><td><input type="textbox" name='subject' value='Newsletter Subject'></td></tr>
 					<tr><td><label for="from_email">From address: </label></td><td><input type="textbox" name='from_email' value='you@example.com'></td></tr>
 					<tr><td><label for="from_name">From name: </label></td><td><input type="textbox" name='from_name' value='John Doe'></td></tr>
 					<tr><td><label for="analytics">Google analytics key: </label></td><td><input type="textbox" name='analytics' value='UA-XXXXX-X'></td></tr></table>
 					<hr>
-					<label for="title">Title: </label><input style='position:relative;left:10px' type="textbox" name='title' value='Newsletter Title'><br>
+					<label for="title">Title: </label><input style='position:relative;left:10px' type="textbox" name='title' value='Newsletter Title'><br><br>
 					<label for="html">HTML:</label><textarea name="html" id="html" cols="30" rows="10">Some pretty html content *|UNSUB|* message
 					</textarea>
 					<label for="text">Plain text: </label>
