@@ -500,6 +500,10 @@
 		$members = getMembers($_COOKIE["lid"],"Subscribers");
 		$clearBatch = array();
 		
+		if( $members == null ) {
+			return;
+		}
+		
 		foreach($members['data'] as $member){
 			array_push($clearBatch,$member['email']);
 		}
