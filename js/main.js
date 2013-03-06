@@ -1,3 +1,7 @@
+function ggl() {
+	$('#google').html('<input type="textbox" name="analytics" value="UA-XXXXX-X">');
+}
+
 $(document).ready(function() {
 	$('#c').mousedown(function() {
 		window.location = "../c/";
@@ -11,6 +15,7 @@ $(document).ready(function() {
 	$('#new_c').mousedown(function() {
 		window.location = 'create.php';
 	});
+	
 	$('.mo').mousedown(function() {
 		var cid = $('#id' + $(this).attr('id')[$(this).attr('id').length-1]).val();
 		var ct = $('#t' + $(this).attr('id')[$(this).attr('id').length-1]).val();

@@ -35,7 +35,6 @@
 				</div>
 				<div id="main">
 					<div id="padder">
-					<br>
 					<form action="modifyAPI.php" method="post">
 					<label for="title">Title: </label>
 					<?php

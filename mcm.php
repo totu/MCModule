@@ -26,6 +26,55 @@
         return false;
     }
 	
+		/* ============================ *
+	 *  Template related functions  *
+	 * ============================ */
+	function MCM_templates() {
+		require_once '../inc/MCAPI.class.php';
+		require  '../inc/config.inc.php';
+		$api = new MCAPI($apikey);
+		
+		$retval = $api->templates();
+		if ($api->errorCode) {
+			$return = "Unable to load templates.";
+		} elseif (sizeof($retval['user']) <= 0) {
+			$return = "<br><br>You have no custom templates.";
+		} else {
+			$return ="<table>
+			<tr><td>Name</td>
+			<td>ID</td>
+			<td>Layout</td>
+			<td>Created</td>
+			<td>Actions</td></tr>";
+			foreach($retval['user'] as $t) {
+				$return .= "<tr>
+				<td>" . $t['name'] . "</td>
+				<td>" . $t['id'] . "</td>
+				<td>" . $t['layout'] . "</td>
+				<td>" . MCM_fixDate($t['date_created']) . "</td></tr>";
+			}
+			$return .= "</table>";
+		}
+		return $return;
+	}
+	
+	function MCM_templateDropdown() {
+		require_once '../inc/MCAPI.class.php';
+		require  '../inc/config.inc.php';
+		$api = new MCAPI($apikey);
+		
+		$retval = $api->templates();
+		if ($api->errorCode) {
+			$return = "Unable to load lists()!";
+		} else {
+			$return = "<select name='tid'>";
+			foreach ($retval['user'] as $l) {
+				$return .= "<option value='" . $l['id'] . "'>" . MCM_getName($l['id'], 'list') . "</option>";
+			}
+			$return .= "</select>";
+		}
+		return $return;
+	}
 	
 	/* ============================ *
 	 *  Campaign related functions  *
@@ -67,17 +116,56 @@
 		if ($api->errorCode || sizeof($retval) == 0) {
 			$return = "No detailed click statistics available for this campaign yet!";
 		} else {
-			$return = "<table>
+			$return = "<script type='text/javascript'>
+				var s1 = []
+				</script><table>
 			<tr><td style='width:600px;'>URL</td>
 			<td>Clicks</td>
 			<td>Unique</td></tr>";
+			$counter = 0;
 			foreach($retval as $url=>$d) {
+				$counter++;
 				$return .= "<tr>
 				<td>" . $url . "</td>
 				<td>" . $d['clicks'] . "</td>
-				<td>" . $d['unique'] . "</td></tr>";
+				<td>" . $d['unique'] . "</td></tr>
+				<script type='text/javascript'>
+				s1.push(['URL " . $counter . "', " . $d['clicks'] . "]);
+				</script>"
+				;
 			}
-			$return .= "</table>";
+			$return .= "</table>
+			    <div id='pie8' style='margin:0 auto; width:300px; height:300px;'></div>
+				<script class='code' type='text/javascript'>$(document).ready(function(){ 
+						
+					var plot8 = $.jqplot('pie8', [s1], {
+						grid: {
+							drawBorder: false, 
+							drawGridlines: false,
+							background: '#ffffff',
+							shadow:false
+						},
+						axesDefaults: {
+							
+						},
+						seriesDefaults:{
+							renderer:$.jqplot.PieRenderer,
+							rendererOptions: {
+								showDataLabels: true
+							}
+						},
+						legend: {
+							show: true,
+							rendererOptions: {
+								numberRows: 1
+							},
+							location: 's'
+						}
+					}); 
+				});</script>";
+			
+			
+			
 		}
 		return $return;
 	}
@@ -226,6 +314,8 @@
 		}
 		return $return;
 	}
+	
+	
 	
 	
 	

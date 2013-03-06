@@ -10,7 +10,15 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- piechart stuff -->
+		
+		<link rel="stylesheet" href="jquery.jqplot.min.css"/>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
+		<script type="text/javascript" src='jquery.jqplot.min.js'></script>
+		<script type="text/javascript" src='jqplot.pieRenderer.min.js'></script>
 
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/main.css">
@@ -46,10 +54,7 @@
 			</div>
 		</div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-        <script src="../js/plugins.js"></script>
-        <script src="../js/main.js"></script>
+        
 
     </body>
 </html>

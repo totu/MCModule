@@ -46,17 +46,31 @@
 					?>
 					</td></tr>
 					<br>
+					
 					<tr><td><label for='subject'>Subject: </label></td><td><input type="textbox" name='subject' value='Newsletter Subject'></td></tr>
-					<tr><td><label for="from_email">From address: </label></td><td><input type="textbox" name='from_email' value='you@example.com'></td></tr>
+					
+					<tr><td><label for="from_email">From address: </label></td><td><input type="textbox" name='from_email' value='you@example.com'></td></td></tr>
+					
 					<tr><td><label for="from_name">From name: </label></td><td><input type="textbox" name='from_name' value='John Doe'></td></tr>
-					<tr><td><label for="analytics">Google analytics key: </label></td><td><input type="textbox" name='analytics' value='UA-XXXXX-X'></td></tr></table>
+					
+					<tr><td><label for="analytics">Google analytics key: </label></td><td id='google'><input type="checkbox" name='analytics' id='analytics' onclick='ggl()'/></td></tr>
+					
+					<tr><td><label for="twitter">Auto Tweet</label></td><td><input type="checkbox" name='twitter'value='true'/></td></tr>
+					
+					<tr><td><label for="facebook">Auto Facebook</label></td><td><input type="checkbox" name='facebook'value='true'/></td></tr>
+					</table>
+					
 					<hr>
+					
 					<label for="title">Title: </label><input style='position:relative;left:10px' type="textbox" name='title' value='Newsletter Title'><br><br>
+					
 					<label for="html">HTML:</label><textarea name="html" id="html" cols="30" rows="10">Some pretty html content *|UNSUB|* message
 					</textarea>
+					
 					<label for="text">Plain text: </label>
 					<textarea name="text" id="text" cols="30" rows="10">Text text text *|UNSUB|*
 					</textarea>
+					
 					<br>
 					<input style='float:right;position:relative;right:10px;width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' type="submit" value='Create a New Campaing!'>
 					</form>
