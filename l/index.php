@@ -38,9 +38,9 @@
         <div id="main">
     
 					<?php
-						require_once "./lists.php"; // lists.php contains function called renderLists() and getLists().
+						require_once "./mcm.php"; // mcm.php contains function called showLists() and getLists().
 						
-						renderLists(); // renders lists
+						showLists(); // renders lists
 					
 					?>
 					

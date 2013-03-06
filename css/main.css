@@ -302,6 +302,34 @@ input {
 		border-right: 10px solid transparent;
 		border-bottom: 10px solid #000;
 	}
+	
+/* ===================	  	
+ List specific
+ =================== */   
+  	
+
+  	
+	.list-checkbox {
+	  	
+		margin-top:-5px;
+		
+		margin-bottom:0px;
+	}
+  	
+	#lsf {
+		float:left;
+		width:100px; 		
+		margin-left:30px;	
+		margin-bottom:0px;
+	}
+	  	
+	.lc-options {	
+		float:left;	
+		width:20px; 	
+		margin-left:30px;
+		margin-top:0px;
+ 	}
+	
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -35,7 +35,7 @@
           <div id='l' class="tab">Lists</div>
           <div id='c' class="tab">Campaigns</div>
         </div>
-        <div id="main">
+        <div id="main" style="text-align:left;" >
     
 			<?php
 				require_once "./filters.inc.php";
@@ -43,16 +43,15 @@
 				// form for Batch update. You can choose filter from dropdown list
 				echo '<h1 style="margin-left:30px;">' . $_COOKIE['lt'] . '</h1>';
 				echo '<form name="batch" action="addToList.php" method="post">';
-				echo '<select style=" width:100px; margin-left:30px;" name="formFilter">';
+				echo '<select id="fl" style=" float:left; width:100px; margin-left:30px;" name="formFilter">';
 				foreach ($filters as $key => $value ){
 					echo '<option value=' .  $key . '>' . ucfirst($key) . '</option>';
 				}
 				
 				echo "</select> <br> <br>";
-				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="optin">Send optin emails<br>';
-				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="up_exist">Update currently subscribed users<br>';
-				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="replace_int">Replace interests<br>';
-				echo '<input style=" width:20px; margin-left:30px;" type="checkbox" name="options[]" value="clear">Clear list before updating<br>';
+				echo '<input class="lc-options" type="checkbox" name="options[]" value="optin"><div class="list-checkbox">Send optin emails</div><br>';
+				echo '<input class="lc-options" type="checkbox" name="options[]" value="up_exist"><div class="list-checkbox">Update currently subscribed users</div><br>';
+				echo '<input class="lc-options" type="checkbox" name="options[]" value="clear"><div class="list-checkbox">Clear list before updating</div><br>';
 				echo "<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='up_batch' type='submit' value='Update'>";
 				echo "</form>";
 				
