@@ -1,8 +1,8 @@
 <?php
 
-$filters = [
+$filters = array(
 	"all" => "SELECT DISTINCT * FROM Customers",
-];
+);
 
 
 
