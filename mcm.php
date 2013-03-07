@@ -394,7 +394,7 @@
 		
 		
 		if($retval){
-			echo "<table><tr>
+			echo "<table id='slt'><tr>
 			<td>Name</td>
 			<td>ID</td>
 			<td>Members</td>
@@ -452,7 +452,7 @@
 		if (!($retval = getMembers($listId,$status))) {
 			return false;
 		} else {
-			echo "<table>
+			echo "<table class='ls'>
 			<tr><th ";
 			if ($status == "unsubscribed"){
 				echo "colspan='4'>";
@@ -467,6 +467,7 @@
 				echo "<td>Reason Type</td>
 				<td>Reason</td>";
 			}
+
 			echo "</tr>";
 			
 			foreach($retval['data'] as $member){
