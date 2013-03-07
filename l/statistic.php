@@ -41,7 +41,7 @@
 				require_once '../mcm.php';
 				$lid = $_COOKIE['lid'] ;
 				
-				echo "Statistics for " . $_COOKIE["lt"] . ' - list' ;
+				echo "<h2> Statistics for " . '"' . $_COOKIE["lt"] . '" </h2><br>';
 				showMembers($lid,'subscribed');
 				showMembers($lid,'unsubscribed');
 			?>

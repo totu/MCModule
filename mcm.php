@@ -453,7 +453,7 @@
 			return false;
 		} else {
 			echo "<table class='ls'>
-			<tr><th ";
+			<tr><th style='font-weight:bold;' ";
 			if ($status == "unsubscribed"){
 				echo "colspan='4'>";
 			} else {
@@ -486,7 +486,8 @@
 				echo "</tr>";
 				
 			}
-			echo "</table><br>";
+			echo "</table><br> <br>";
+			
 			//echo "Members matched: ". $retval['total']. "\n";
 			//echo "Members returned: ". sizeof($retval['data']). "\n";
 		}
