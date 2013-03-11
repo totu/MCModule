@@ -13,7 +13,8 @@ $(document).ready(function() {
 		window.location = "../l/";
 	});
 	$('#new_c').mousedown(function() {
-		window.location = 'create.php';
+		$('#usetemplate').css('display','block');
+		//window.location = 'create.php';
 	});
 	
 	$('.mo').mousedown(function() {
