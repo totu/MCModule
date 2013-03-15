@@ -32,6 +32,7 @@
 					<div id='h' class="tab">Settings</div>
 					<div id='l' class="tab">Lists</div>
 					<div id='c' class="tab">Campaigns</div>
+				<div id='t' class="tab">Templates</div>
 				</div>
 				<div id="main">
 				<br><br>

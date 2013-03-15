@@ -12,10 +12,13 @@ $(document).ready(function() {
 	$('#l').mousedown(function() {
 		window.location = "../l/";
 	});
-	$('#new_c').mousedown(function() {
-		$('#usetemplate').css('display','block');
-		//window.location = 'create.php';
+	$('#t').mousedown(function() {
+		window.location = "../t/";
 	});
+	$('#new_c').mousedown(function() {
+		window.location = 'create.php';
+	});
+
 	
 	$('.mo').mousedown(function() {
 		var cid = $('#id' + $(this).attr('id')[$(this).attr('id').length-1]).val();

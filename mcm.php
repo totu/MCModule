@@ -40,6 +40,7 @@
 		} elseif (sizeof($retval['user']) <= 0) {
 			$return = "<br><br>You have no custom templates.";
 		} else {
+			$c = 0;
 			$return ="<table>
 			<tr><td>Name</td>
 			<td>ID</td>
@@ -51,7 +52,14 @@
 				<td>" . $t['name'] . "</td>
 				<td>" . $t['id'] . "</td>
 				<td>" . $t['layout'] . "</td>
-				<td>" . MCM_fixDate($t['date_created']) . "</td></tr>";
+				<td>" . MCM_fixDate($t['date_created']) . "</td>
+				<td>
+					<input id='id" . $c . "' type='hidden' name='id' value='" . $t['id'] . "'>
+					<input id='t" . $c . "' type='hidden' name='t' value='" . $t['name'] . "'>
+					<img title='Modify' class='mo' id='m" . $c . "' src='../img/modify.png' width='30' alt='Modify' /> 
+				</td>
+				</tr>";
+				$c++;
 			}
 			$return .= "</table>";
 		}
@@ -69,7 +77,7 @@
 		} else {
 			$return = "<select name='tid'>";
 			foreach ($retval['user'] as $l) {
-				$return .= "<option value='" . $l['id'] . "'>" . MCM_getName($l['id'], 'list') . "</option>";
+				$return .= "<option value='" . $l['id'] . "'>" . MCM_getName($l['id'], 'template') . "</option>";
 			}
 			$return .= "</select>";
 		}
@@ -119,19 +127,19 @@
 			$return = "<script type='text/javascript'>
 				var s1 = []
 				</script><table>
-			<tr><td style='width:600px;'>URL</td>
+			<tr><td style='width:500px;'>URL</td>
 			<td>Clicks</td>
-			<td>Unique</td></tr>";
+			<td style='width:200px'>Unique</td></tr>";
 			$counter = 0;
 			foreach($retval as $url=>$d) {
 				$counter++;
 				$return .= "<tr>
 				<td>" . $url . "</td>
 				<td>" . $d['clicks'] . "</td>
-				<td>" . $d['unique'] . "</td></tr>
+				<td>" . $d['unique'] . "</td>
 				<script type='text/javascript'>
 				s1.push(['URL " . $counter . "', " . $d['clicks'] . "]);
-				</script>"
+				</script></tr>"
 				;
 			}
 			$return .= "</table>
@@ -156,9 +164,6 @@
 						},
 						legend: {
 							show: true,
-							rendererOptions: {
-								numberRows: 1
-							},
 							location: 's'
 						}
 					}); 
@@ -351,6 +356,21 @@
 		if ($opt == 'list') {
 			$retval = $api->lists();
 			$v = 'name';
+		} elseif ($opt == 'template') {
+			$retval = $api->templates();
+			$v = 'name';
+			if ($api->errorCode) {
+				$return = $api->errorCode;
+			} else {
+				$id = array();
+				$name = array();
+				foreach ($retval['user'] as $l) {
+					array_push($id,$l['id']);
+					array_push($name,$l[$v]);
+				}
+				$return = $name[array_search($lid, $id)];
+			}
+			return ucfirst(strtolower($return));
 		} else {
 			$retval = $api->campaigns();
 			$v = 'title';

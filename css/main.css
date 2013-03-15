@@ -259,7 +259,7 @@ input {
 	}
 
 	#createcampaigntable, #createcampaigntable td {
-		width:420px;
+		width:540px;
 		text-align:left;
 		background:#fff;
 		padding:0;
@@ -302,6 +302,8 @@ input {
 		border-right: 10px solid transparent;
 		border-bottom: 10px solid #000;
 	}
+	
+	
 	
 /* ===================	  	
  List specific

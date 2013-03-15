@@ -21,7 +21,6 @@
 	<!--[if lt IE 7]>
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 	<![endif]-->
-
 	<div id="wrapper">
 		<div id="header">
 			<input type="textbox" id='username' name='username' value='Username'>
@@ -33,11 +32,12 @@
 			<div id='h' class="tab">Settings</div>
 			<div id='l' class="tab">Lists</div>
 			<div id='c' class="tab">Campaigns</div>
+			<div id='t' class="tab">Templates</div>
 		</div>
 			<div id="main">
 				<?php
-					require_once '../mcm.php';
 					
+					require_once '../mcm.php';
 					echo MCM_campaigns();
 				?>
 				<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'>

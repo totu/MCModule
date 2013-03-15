@@ -13,8 +13,19 @@
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 	<link rel="stylesheet" href="../css/normalize.css">
-	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/main.css">       
 	<script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../js/html/style.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+
+	<script type="text/javascript" src="../js/markitup/jquery.markitup.js"></script>
+	<script type="text/javascript" src="../js/markitup/sets/html/set.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../js/markitup/skins/markitup/style.css" /><link rel="stylesheet" type="text/css" href="../js/markitup/sets/default/style.css" />
+
+	<script src="../js/plugins.js"></script>
+	<script src="../js/main.js"></script>
 </head>
 
 <body>
@@ -33,39 +44,65 @@
 				<div id='h' class="tab">Settings</div>
 				<div id='l' class="tab">Lists</div>
 				<div id='c' class="tab">Campaigns</div>
+				<div id='t' class="tab">Templates</div>
 			</div>
 				<div id="main">
 				<div id="padder">	
-					<form action="createAPI.php" method='post'>
-					<table id='createcampaigntable'>
-					<tr>
-					<td><label for='lid'>Select a list</label></td><td>
+					
+					<table id='createcampaigntable'> 
+					<form action="create.php" method='post'>
+					<tr><td><label for='tid'>Change template</label></td><td>
 					<?php
 						require_once '../mcm.php';
+						echo MCM_templateDropdown();
+					?>
+					<td style='text-align:left;'><input type="submit" value='Change' style='test-align:left;'></td>
+					<tr>
+					</form>
+					<form action="createAPI.php" method='post'>
+					<td><label for='lid'>Select a list</label></td><td>
+					<?php
+						
 						echo MCM_listDropdown();
 					?>
 					</td></tr>
 					<br>
-					
+					</td></tr>
 					<tr><td><label for='subject'>Subject: </label></td><td><input type="textbox" name='subject' value='Newsletter Subject'></td></tr>
 					
 					<tr><td><label for="from_email">From address: </label></td><td><input type="textbox" name='from_email' value='you@example.com'></td></td></tr>
 					
 					<tr><td><label for="from_name">From name: </label></td><td><input type="textbox" name='from_name' value='John Doe'></td></tr>
-					
-					<tr><td><label for="analytics">Google analytics key: </label></td><td id='google'><input type="checkbox" name='analytics' id='analytics' onclick='ggl()'/></td></tr>
-					
-					<tr><td><label for="twitter">Auto Tweet</label></td><td><input type="checkbox" name='twitter'value='true'/></td></tr>
-					
-					<tr><td><label for="facebook">Auto Facebook</label></td><td><input type="checkbox" name='facebook'value='true'/></td></tr>
 					</table>
 					
 					<hr>
 					
 					<label for="title">Title: </label><input style='position:relative;left:10px' type="textbox" name='title' value='Newsletter Title'><br><br>
 					
-					<label for="html">HTML:</label><textarea name="html" id="html" cols="30" rows="10">Some pretty html content *|UNSUB|* message
-					</textarea>
+					<?php
+						$api = new MCAPI($apikey);
+						$retval = $api->templates();
+						if ($api->errorCode) {
+							$return = "Unable to load templates.";
+						} else {
+						$tid = [];
+							foreach($retval['user'] as $t) {
+								array_push($tid, $t['id']);
+							}
+							if (isset($_POST['tid']) && $_POST['tid'] != '') {
+								$t = $_POST['tid'];
+							} else {
+								$t = $tid[0];
+							}
+						}
+						$retval = $api->templateInfo($t);
+						echo '<label for="markItUp">HTML: </label><textarea name="markItUp" id="markItUp">' . $retval['source'] . '</textarea>';
+					?>
+					<script type="text/javascript" >
+					   $(document).ready(function() {
+						  $("#markItUp").markItUp(mySettings);
+					   });
+					</script>
 					
 					<label for="text">Plain text: </label>
 					<textarea name="text" id="text" cols="30" rows="10">Text text text *|UNSUB|*
@@ -78,11 +115,5 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-	<script src="../js/plugins.js"></script>
-	<script src="../js/main.js"></script>
-
 	</body>
 </html>
