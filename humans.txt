@@ -4,12 +4,15 @@
 # TEAM
 
     Topi Tuulensu -- Coder -- @TotuMorph
+	Mika Lamminaho -- Coder -- @S_Migu
 
 # THANKS
 
-    -
+    - Mom
 
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3
-    Normalize.css, jQuery, Modernizr
+    Normalize.css, jQuery, Modernizr, PHP
+	Drupal, MailChimp
+	
