@@ -408,7 +408,7 @@
 	}
 	 
 	 // renders list as a table
-	function showLists() {
+	function MCM_showLists() {
 		
 		$retval = getLists();
 		
@@ -445,7 +445,7 @@
 		}
 	}
 	 
-	 function getMembers($listId,$status){
+	 function MCM_getMembers($listId,$status){
 		require_once '../inc/MCAPI.class.php'; // MailChimpAPI
 		require '../inc/config.inc.php'; // contains apikey
 		
@@ -467,9 +467,9 @@
 			}
 	}
  
-	function showMembers($listId,$status) {
+	function MCM_showMembers($listId,$status) {
 			
-		if (!($retval = getMembers($listId,$status))) {
+		if (!($retval = MCM_getMembers($listId,$status))) {
 			return false;
 		} else {
 			echo "<table class='ls'>
@@ -514,7 +514,7 @@
 	}
 	
 	// gets filter from filter file
-	function getFilter(){
+	function MCM_getFilter(){
 		require './filters.inc.php';
 		
 		// get selected filterName and then use that to get the wanted query.
@@ -528,9 +528,9 @@
 	}
 	
 	// read database according to the filter
-	function readCustomers() {
+	function MCM_readCustomers() {
 		require '../inc/config.inc.php';
-		if(($filter = getFilter())){
+		if(($filter = MCM_getFilter())){
 			
 			$con = mysql_connect($location,$user,$password);
 			if (!$con)
@@ -567,7 +567,7 @@
 		}
 	}
 	
-	function batchSubscribe($listId,$batch,$optin,$up_exist,$replace_int){
+	function MCM_batchSubscribe($listId,$batch,$optin,$up_exist,$replace_int){
 		require_once '../inc/MCAPI.class.php';
 		require '../inc/config.inc.php'; //contains apikey
 		$api = new MCAPI($apikey);
@@ -580,7 +580,7 @@
 			echo "Batch Subscribe failed! <br>";
 			echo "code:".$api->errorCode."<br>";
 			echo "msg :".$api->errorMessage."<br>";
-			throw new Exception('BatchSubscribe Failed');
+			throw new Exception('MCM_batchSubscribe Failed');
 		} else {
 			// RESULTS
 			return true;
@@ -589,7 +589,7 @@
 	
 	}
 	
-	function batchUnsubscribe($emails,$delete,$bye,$notify){
+	function MCM_batchUnsubscribe($emails,$delete,$bye,$notify){
 		require_once '../inc/MCAPI.class.php';
 		require '../inc/config.inc.php'; //contains apikey
 
@@ -601,15 +601,15 @@
 			// an api error occurred
 			echo "code:".$api->errorCode."\n";
 			echo "msg :".$api->errorMessage."\n";
-			throw new Exception('batchUnsubscribe Failed');
+			throw new Exception('MCM_batchUnsubscribe Failed');
 		} else {
 			return;
 		}
 	}
 	
 	// clears list members
-	function clearList() {
-		$members = getMembers($_COOKIE["lid"],"Subscribers");
+	function MCM_clearList() {
+		$members = MCM_getMembers($_COOKIE["lid"],"Subscribers");
 		$clearBatch = array();
 		
 		if( $members == null ) {
@@ -620,7 +620,7 @@
 			array_push($clearBatch,$member['email']);
 		}
 		
-		batchUnsubscribe($clearBatch,true,false,false);
+		MCM_batchUnsubscribe($clearBatch,true,false,false);
 	}
 	
 ?>

@@ -3,10 +3,10 @@
 	require_once '../mcm.php';
 		
 	if(IsChecked('options','clear')){
-		clearList();
+		MCM_clearList();
 	}
 
-	if(!($batch = readCustomers())) {
+	if(!($batch = MCM_readCustomers())) {
 		trigger_error('$batch is empty');
 	}
 
@@ -16,7 +16,7 @@
 	$replace_int = true; // no, add interest, don't replace
 	$listId = $_COOKIE['lid'];
 	
-	if( batchSubscribe($listId, $batch,$optin,$up_exist,$replace_int) ){
+	if( MCM_batchSubscribe($listId, $batch,$optin,$up_exist,$replace_int) ){
 		header( 'Location: .' ) ;
 	}
 

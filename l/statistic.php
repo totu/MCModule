@@ -43,8 +43,8 @@
 				$lid = $_COOKIE['lid'] ;
 				
 				echo "<h2> Statistics for " . '"' . $_COOKIE["lt"] . '" </h2><br>';
-				showMembers($lid,'subscribed');
-				showMembers($lid,'unsubscribed');
+				MCM_showMembers($lid,'subscribed');
+				MCM_showMembers($lid,'unsubscribed');
 			?>
 
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
