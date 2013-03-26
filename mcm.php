@@ -26,7 +26,7 @@
         return false;
     }
 	
-		/* ============================ *
+	/* ============================ *
 	 *  Template related functions  *
 	 * ============================ */
 	function MCM_templates() {
@@ -87,6 +87,57 @@
 	/* ============================ *
 	 *  Campaign related functions  *
 	 * ============================ */
+	function MCM_campaignDataToDB() {
+		require_once '../inc/MCAPI.class.php';
+		require '../inc/config.inc.php';
+		$api = new MCAPI($apikey);
+		
+		$retval = $api->campaigns();
+		if ($api->errorCode) {
+			$return = "Unable to pull list of Campaigns!";
+		} else {
+			foreach($retval['data'] as $c) {
+				$cid = $c['id'];
+				$name = $c['title'];
+					$val = $api->campaignStats($cid);
+					if ($api->errorCode) {
+						$return = "Unable to load campaign statistics!";
+					} else {
+						$number_sent = $val['emails_sent'];
+						$bounces = $val['hard_bounces'] + $val['soft_bounces'];
+						$opens = $val['unique_opens']; 
+						$clicks = $val['unique_clicks'];
+						$unopened = $val['opens'] - $number_sent;
+						
+						$con = mysql_connect($location,$user,$password);
+						if (mysqli_connect_errno()) {
+							echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						}
+						
+						$exists = mysql_query("SELECT * FROM `CampaignData` WHERE `name` =" . $name ."");
+						
+						$count = mysql_num_rows($exists);
+						if ($count == 1) {
+							$sql = "UPDATE CampaignData 
+							SET opens = '$opens' AND clicks = '$clicks' AND unopened = '$unopened' AND bounced = '$bounces' AND opens = '$opens' 
+							WHERE cid = '$cid' AND name = '$name'");
+						} else {
+							$sql = "INSERT INTO CampaignData (cid,name,opens,clicks,unopened,bounced)
+							VALUES
+							('$cid,$name,$opens','$clicks','$unopened','$bounces')";
+						}
+						
+						if (!mysqli_query($con,$sql)) {
+							die('Error: ' . mysqli_error());
+						}
+						
+						mysql_close($con);
+					}
+			}
+		}
+	}
+	
+	 
 	function MCM_campaignUnsubs($cid) {
 		require_once '../inc/MCAPI.class.php';
 		require  '../inc/config.inc.php';
@@ -184,6 +235,7 @@
 		if ($api->errorCode) {
 			$return = "Unable to load campaign statistics!";
 		} else {
+			$number_sent = $retval['emails_sent'];
 			$return = "<table>
 			<tr><td colspan='7' style='font-weight:700;font-size:20px;'> Statistics for " . MCM_getName($cid, 'campaign') . "</td></tr><tr>
 			<td class='hb'>Hard Bounces</td>
@@ -192,7 +244,7 @@
 			<td class='explain'>Opens</td>
 			<td class='explain'>Clicks</td>
 			<td>Last Click</td>
-			<td>Emails Sent</td>
+			<td>Unopened</td>
 			</tr><tr>
 			<td class='hb'>" . $retval['hard_bounces'] . "</td>
 			<td class='sb'>" . $retval['soft_bounces'] . "</td>
@@ -200,7 +252,7 @@
 			<td class='explain'>" . $retval['unique_opens'] . " (" . $retval['opens'] . ")</td>
 			<td class='explain'>" . $retval['unique_clicks'] . " (" . $retval['clicks'] . ")</td>
 			<td>" . MCM_fixDate($retval['last_click']) . "</td>
-			<td>" . $retval['emails_sent'] . "</td></tr>
+			<td>" .  ($retval['opens'] - $number_sent) . "</td></tr>
 			</table>";
 		}
 		return $return;
@@ -408,7 +460,7 @@
 	}
 	 
 	 // renders list as a table
-	function MCM_showLists() {
+	function showLists() {
 		
 		$retval = getLists();
 		
@@ -445,7 +497,7 @@
 		}
 	}
 	 
-	 function MCM_getMembers($listId,$status){
+	 function getMembers($listId,$status){
 		require_once '../inc/MCAPI.class.php'; // MailChimpAPI
 		require '../inc/config.inc.php'; // contains apikey
 		
@@ -467,9 +519,9 @@
 			}
 	}
  
-	function MCM_showMembers($listId,$status) {
+	function showMembers($listId,$status) {
 			
-		if (!($retval = MCM_getMembers($listId,$status))) {
+		if (!($retval = getMembers($listId,$status))) {
 			return false;
 		} else {
 			echo "<table class='ls'>
@@ -514,7 +566,7 @@
 	}
 	
 	// gets filter from filter file
-	function MCM_getFilter(){
+	function getFilter(){
 		require './filters.inc.php';
 		
 		// get selected filterName and then use that to get the wanted query.
@@ -528,9 +580,9 @@
 	}
 	
 	// read database according to the filter
-	function MCM_readCustomers() {
+	function readCustomers() {
 		require '../inc/config.inc.php';
-		if(($filter = MCM_getFilter())){
+		if(($filter = getFilter())){
 			
 			$con = mysql_connect($location,$user,$password);
 			if (!$con)
@@ -567,7 +619,7 @@
 		}
 	}
 	
-	function MCM_batchSubscribe($listId,$batch,$optin,$up_exist,$replace_int){
+	function batchSubscribe($listId,$batch,$optin,$up_exist,$replace_int){
 		require_once '../inc/MCAPI.class.php';
 		require '../inc/config.inc.php'; //contains apikey
 		$api = new MCAPI($apikey);
@@ -580,7 +632,7 @@
 			echo "Batch Subscribe failed! <br>";
 			echo "code:".$api->errorCode."<br>";
 			echo "msg :".$api->errorMessage."<br>";
-			throw new Exception('MCM_batchSubscribe Failed');
+			throw new Exception('BatchSubscribe Failed');
 		} else {
 			// RESULTS
 			return true;
@@ -589,7 +641,7 @@
 	
 	}
 	
-	function MCM_batchUnsubscribe($emails,$delete,$bye,$notify){
+	function batchUnsubscribe($emails,$delete,$bye,$notify){
 		require_once '../inc/MCAPI.class.php';
 		require '../inc/config.inc.php'; //contains apikey
 
@@ -601,15 +653,15 @@
 			// an api error occurred
 			echo "code:".$api->errorCode."\n";
 			echo "msg :".$api->errorMessage."\n";
-			throw new Exception('MCM_batchUnsubscribe Failed');
+			throw new Exception('batchUnsubscribe Failed');
 		} else {
 			return;
 		}
 	}
 	
 	// clears list members
-	function MCM_clearList() {
-		$members = MCM_getMembers($_COOKIE["lid"],"Subscribers");
+	function clearList() {
+		$members = getMembers($_COOKIE["lid"],"Subscribers");
 		$clearBatch = array();
 		
 		if( $members == null ) {
@@ -620,7 +672,7 @@
 			array_push($clearBatch,$member['email']);
 		}
 		
-		MCM_batchUnsubscribe($clearBatch,true,false,false);
+		batchUnsubscribe($clearBatch,true,false,false);
 	}
 	
 ?>

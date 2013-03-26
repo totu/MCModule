@@ -40,7 +40,7 @@
 					require_once '../mcm.php';
 					echo MCM_campaigns();
 				?>
-				<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'>
+				<input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='new_c' type='button' value='Add a New Campaign'><input style='float:right; width:180px; border-radius:5px; background:#47c9e9; color:#fff; text-shadow:1px 1px 4px #000; height:30px;' id='Stats2DB' type='button' value='Campaign Stats -> DB'>
 			</div>
 		</div>
 	</div>
